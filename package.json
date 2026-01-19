@@ -1,0 +1,53 @@
+{
+  "name": "pinnacleworks-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm dev:http",
+    "dev:http": "tsx watch src/http/index.ts",
+    "start": "pnpm start:http",
+    "start:http": "node dist/http.js",
+    "build": "node build.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --reporter=verbose",
+    "test:coverage": "vitest run --coverage",
+    "repl": "tsx src/repl.ts",
+    "type:check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "http-status-codes": "^2.3.0",
+    "luxon": "^3.7.2",
+    "to-words": "^4.8.0",
+    "tsx": "^4.20.6",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/express": "^5.0.5",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.47.0"
+  },
+  "main": "eslint.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
+}

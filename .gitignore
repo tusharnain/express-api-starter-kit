@@ -1,0 +1,48 @@
+# --- Node ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Environment files ---
+.env
+.env.*
+!.env.example
+
+# --- Logs ---
+logs/
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# --- Build / Output ---
+dist/
+build/
+coverage/
+temp/
+tmp/
+
+# --- TypeScript ---
+*.tsbuildinfo
+
+# --- Vitest ---
+.vitest/
+coverage/
+
+# --- IDE Stuff ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+
+# --- Misc ---
+.cache/
+.repl_history
