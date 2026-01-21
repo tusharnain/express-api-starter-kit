@@ -5,7 +5,6 @@ import repl from 'repl';
 import { fileURLToPath } from 'url';
 import logger from './utils/logger';
 
-// @ts-expect-error ignore-fix
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -37,7 +36,7 @@ await (async () => {
               });
               loaded.push(fullPath);
             } catch (err) {
-              logger.error(`Failed to load ${label}: ${entry.name}`, err);
+              logger.error(err, `Failed to load ${label}: ${entry.name}`);
             }
           }
         }
@@ -75,7 +74,7 @@ await (async () => {
       r.displayPrompt(true);
     }, 200);
   } catch (err) {
-    logger.error('Failed to start REPL:', err);
+    logger.error(err, 'Failed to start REPL:');
     process.exit(1);
   }
 })();

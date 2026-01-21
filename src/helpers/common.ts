@@ -3,7 +3,7 @@ import { config } from '@/config/config';
 export function environment(): Environment;
 export function environment(env: Environment): boolean;
 export function environment(env?: Environment): boolean | Environment {
-  const current = config.http.environment as Environment;
+  const current = config.environment as Environment;
 
   if (env) {
     return current === env;

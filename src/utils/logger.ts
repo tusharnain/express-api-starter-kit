@@ -1,22 +1,29 @@
-type LogMessage = unknown;
-type LogArgs = unknown[];
+import pino from 'pino';
+import { config } from '@/config/config';
 
-const timestamp = () => {
-  return new Date().toISOString().slice(0, 19).replace('T', ' ');
-};
+const logger = pino({
+  level: config.logLevel,
+  customLevels: {
+    success: 35,
+  },
+  transport: config.logPretty
+    ? {
+        target: 'pino-pretty',
+        options: {
+          colorize: true,
+          translateTime: 'HH:MM:ss Z',
+          ignore: 'pid,hostname',
+          customLevels: 'trace:10,debug:20,info:30,success:35,warn:40,error:50,fatal:60',
+          customColors: 'trace:gray,debug:magenta,info:blue,success:green,warn:yellow,error:red,fatal:bgRed',
+        },
+      }
+    : undefined,
+});
 
-const logger = {
-  info: (msg: LogMessage, ...args: LogArgs): void => console.log(`ℹ️  [INFO] [${timestamp()}]`, msg, ...args),
-
-  error: (msg: LogMessage, ...args: LogArgs): void => console.error(`❌ [ERROR] [${timestamp()}]`, msg, ...args),
-
-  warn: (msg: LogMessage, ...args: LogArgs): void => console.warn(`⚠️ [WARNING] [${timestamp()}]`, msg, ...args),
-
-  success: (msg: LogMessage, ...args: LogArgs): void => console.log(`✅ [SUCCESS] [${timestamp()}]`, msg, ...args),
-
-  debug: (msg: LogMessage, ...args: LogArgs): void => console.log(`🐞 [DEBUG] [${timestamp()}]`, msg, ...args),
-
-  request: (...args: LogArgs): void => console.log(`[HTTP] [${timestamp()}]`, ...args),
-};
+declare module 'pino' {
+  interface BaseLogger {
+    success: LogFn;
+  }
+}
 
 export default logger;

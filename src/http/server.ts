@@ -5,16 +5,17 @@ import logger from '@/utils/logger';
 
 export class Server {
   public readonly app: Express;
-  private server: HTTPServer | null = null;
+  private server?: HTTPServer;
 
   constructor(app: Express) {
     this.app = app;
   }
 
   public start(): this {
-    this.server = this.app.listen(config.http.port, () => {
+    this.server = this.app.listen(config.http.port);
+    this.server.on('listening', () => {
       logger.success(`Server started on port ${config.http.port}`);
-      logger.info(`Environment: ${config.http.environment}`);
+      logger.info(`Environment: ${config.environment}`);
     });
 
     this.handleStartupErrors();
@@ -23,8 +24,23 @@ export class Server {
     return this;
   }
 
-  public use(handler: RequestHandler | ErrorRequestHandler): this {
-    this.app.use(handler);
+  public use(handler: RequestHandler): this;
+  public use(handler: ErrorRequestHandler): this;
+  public use(path: string, handler: RequestHandler): this;
+  public use(path: string, handler: ErrorRequestHandler): this;
+  public use(pathOrHandler: string | RequestHandler | ErrorRequestHandler, handler?: RequestHandler | ErrorRequestHandler): this {
+    if (typeof pathOrHandler === 'string' && handler) {
+      this.app.use(pathOrHandler, handler);
+    } else if (typeof pathOrHandler !== 'string') {
+      this.app.use(pathOrHandler);
+    }
+    return this;
+  }
+
+  public when(condition: boolean, callback: (server: this) => void): this {
+    if (condition) {
+      callback(this);
+    }
     return this;
   }
 
@@ -66,11 +82,11 @@ export class Server {
     process.on('SIGINT', () => this.shutdown('SIGINT'));
     process.on('SIGTERM', () => this.shutdown('SIGTERM'));
     process.on('uncaughtException', (error) => {
-      logger.error('Uncaught Exception:', error);
+      logger.error(error, 'Uncaught Exception');
       process.exit(1);
     });
     process.on('unhandledRejection', (reason) => {
-      logger.error('Unhandled Rejection:', reason);
+      logger.error({ reason }, 'Unhandled Rejection');
       process.exit(1);
     });
   }

@@ -1,4 +1,4 @@
-import type { HomeRequestBody } from '@/http/validation/api/process-word/home.validation';
+import type { HomeRequestBody } from '@/http/validation/api/home.validation';
 import type { Request, Response } from 'express';
 import { BaseController } from '@/http/controllers/base.controller';
 

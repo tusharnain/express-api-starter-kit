@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
+import { environment } from '@/helpers/common';
 import { ApiError } from '@/http/errors/api-error';
-import { environment } from '@/utils/common';
 import logger from '@/utils/logger';
 
 type MaybeErrorStatus = { statusCode?: number };
