@@ -20,7 +20,7 @@ const steps = [
   { name: 'Type Check', command: 'tsc --noEmit --pretty', executable: true },
   { name: 'Lint', command: 'eslint . --ext .ts', executable: true },
   { name: 'Format Check', command: 'prettier --check .', executable: true },
-  // { name: 'Tests', command: 'vitest run', executable: true },
+  { name: 'Tests', command: 'NODE_ENV=testing vitest run', executable: true },
   { name: 'Build', command: 'tsup', executable: !isCheckMode },
 ];
 
