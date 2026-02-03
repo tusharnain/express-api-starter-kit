@@ -1,13 +1,29 @@
 declare module 'morgan-body' {
-  import type { Express } from 'express';
+  import type { Express, Request, Response } from 'express';
+
   interface MorganBodyOptions {
     maxBodyLength?: number;
+
     logRequestBody?: boolean;
     logResponseBody?: boolean;
-    dateTimeFormat?: string;
+
+    logReqHeaderList?: string[];
+    logResHeaderList?: string[];
+
+    logAllReqHeader?: boolean;
+    logAllResHeader?: boolean;
+
+    prettify?: boolean;
+    dateTimeFormat?: 'iso' | 'utc' | 'local' | string;
     noColors?: boolean;
-    stream?: { write(str: string): void };
+
+    skip?: (req: Request, res: Response) => boolean;
+
+    stream?: {
+      write(str: string): void;
+    };
   }
+
   function morganBody(app: Express, options?: MorganBodyOptions): void;
   export default morganBody;
 }

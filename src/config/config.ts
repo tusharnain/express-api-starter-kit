@@ -30,34 +30,6 @@ const schema = z.object({
       .optional()
       .default('20mb')
       .refine((val) => /^\d+(kb|mb|gb)$/i.test(val), 'REQUEST_BODY_SIZE_LIMIT must be like 100kb, 5mb, 1gb'),
-
-    requestLogger: z.object({
-      enabled: z
-        .string()
-        .optional()
-        .default('true')
-        .transform((val) => val === 'true'),
-
-      format: z.string().optional().default('dev'),
-
-      logRequestBody: z
-        .string()
-        .optional()
-        .default('true')
-        .transform((val) => val === 'true'),
-
-      logResponseBody: z
-        .string()
-        .optional()
-        .default('true')
-        .transform((val) => val === 'true'),
-
-      maxBodyLength: z
-        .string()
-        .optional()
-        .default('1000')
-        .transform((val) => Number(val)),
-    }),
   }),
 });
 
@@ -68,13 +40,6 @@ const parsed = schema.safeParse({
   http: {
     port: process.env.PORT,
     requestBodySizeLimit: process.env.REQUEST_BODY_SIZE_LIMIT,
-    requestLogger: {
-      enabled: process.env.REQUEST_LOGGER_ENABLED,
-      format: process.env.REQUEST_LOGGER_FORMAT,
-      logRequestBody: process.env.REQUEST_LOGGER_LOG_REQUEST_BODY,
-      logResponseBody: process.env.REQUEST_LOGGER_LOG_RESPONSE_BODY,
-      maxBodyLength: process.env.REQUEST_LOGGER_MAX_BODY_LENGTH,
-    },
   },
 });
 
